@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import {Link} from 'react-router-dom'
 
 class ListOfCars extends Component {
-  listOfCars = ({ cars }) => {
-    if (cars) {
-      return cars.map(car => (
+  listOfCars = ({ list }) => {
+    if (list) {
+      return list.map(car => (
         <Link key={car.id} to={`/car/${car.id}`} className="car_item">
           <div className="left" >
           <img src={`/images/${car.image}`} alt="" /> 
@@ -22,11 +22,12 @@ class ListOfCars extends Component {
   };
 
   render() {
-    return <div>{this.listOfCars(this.props)}</div>;
+    return <div>{this.listOfCars(this.props.cars)}</div>;
   }
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
     cars: state.cars
   };

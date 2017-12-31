@@ -1,25 +1,48 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux'
-import {carDetail} from '../actions'
-import {bindActionCreators} from 'redux'
+import { connect } from "react-redux";
+import { carDetail, clearDetail } from "../actions";
+import { bindActionCreators } from "redux";
 
 class Car extends Component {
-  render() {
-    return (<div>
+  componentWillMount() {
+    this.props.carDetail(this.props.match.params.id);
+  }
 
-      {this.props.match.params.id}
-    </div>);
+  componentWillUnmount() {
+    this.props.clearDetail();
+  }
+
+  renderDetail = ({ detail }) => {
+    if (detail) {
+      return detail.map(item => {
+        return (
+          <div key={item.id} className="car_detail">
+            <img src={`/images/${item.image}`} alt="" />
+            <div className="content">
+              <h2>{item.model}</h2>
+              <h4>{item.brand}</h4>
+              <p>{item.description}</p>{" "}
+            </div>
+          </div>
+        );
+      });
+    }
+  };
+
+  render() {
+    return <div>{this.renderDetail(this.props.cars)}</div>;
   }
 }
 
-function mapStateToProps(state){
-return {
-  carDetail:state.carDetail
-}
-}
-
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({carDetail},dispatch);
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    cars: state.cars
+  };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Car);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ carDetail, clearDetail }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Car);
