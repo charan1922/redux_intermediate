@@ -48,3 +48,10 @@ border-bottom: 2px solid black  l
 .car_item .right h6{
     margin: 10px;
 }
+
+
+
+/* car detail */
+.car_detail img{width:30%;}
+.car_detail h2, .car_detail h4 {margin:0px;}
+.car_detail .content{padding: 10px};
