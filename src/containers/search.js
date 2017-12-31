@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { getCars } from "../actions";
 
 class Search extends Component {
   constructor(props) {
@@ -9,14 +13,17 @@ class Search extends Component {
   }
 
   searchCars = event => {
-    //   event.preventDefault();
-    console.log(this.state);
+    event.preventDefault();
+    this.props.getCars(this.state.keyword);
   };
 
   handleChange = event => {
     this.setState({ keyword: event.target.value });
-    
   };
+
+  componentDidMount(){
+    console.log(this.state)
+}
 
   render() {
     return (
@@ -29,4 +36,8 @@ class Search extends Component {
   }
 }
 
-export default Search;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ getCars }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Search);
